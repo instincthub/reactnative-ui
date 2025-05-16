@@ -1,0 +1,122 @@
+export const typography = {
+  fontFamily: {
+    primary: "Nunito",
+    secondary: "Montserrat",
+  },
+  fontSize: {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 18,
+    xl: 20,
+    "2xl": 24,
+    "3xl": 30,
+    "4xl": 36,
+    "5xl": 48,
+  },
+  lineHeight: {
+    none: 1,
+    tight: 1.25,
+    normal: 1.5,
+    relaxed: 1.75,
+  },
+
+  fontWeight: {
+    light: "300",
+    regular: "400",
+    medium: "500",
+    semiBold: "600",
+    bold: "700",
+  },
+  sizes: {
+    xs: 12,
+    small: 14,
+    medium: 16,
+    large: 18,
+    xl: 20,
+    xxl: 24,
+  },
+
+  variants: {
+    h1: {
+      fontFamily: "System",
+      fontSize: 32,
+      fontWeight: "700",
+      lineHeight: 40,
+    },
+    h2: {
+      fontFamily: "System",
+      fontSize: 28,
+      fontWeight: "700",
+      lineHeight: 36,
+    },
+    h3: {
+      fontFamily: "System",
+      fontSize: 24,
+      fontWeight: "600",
+      lineHeight: 32,
+    },
+    h4: {
+      fontFamily: "System",
+      fontSize: 22,
+      fontWeight: "600",
+      lineHeight: 30,
+    },
+    h5: {
+      fontFamily: "System",
+      fontSize: 20,
+      fontWeight: "600",
+      lineHeight: 28,
+    },
+    h6: {
+      fontFamily: "System",
+      fontSize: 18,
+      fontWeight: "600",
+      lineHeight: 26,
+    },
+    subtitle1: {
+      fontFamily: "System",
+      fontSize: 16,
+      fontWeight: "500",
+      lineHeight: 24,
+    },
+    subtitle2: {
+      fontFamily: "System",
+      fontSize: 14,
+      fontWeight: "500",
+      lineHeight: 22,
+    },
+    body1: {
+      fontFamily: "System",
+      fontSize: 16,
+      fontWeight: "400",
+      lineHeight: 24,
+    },
+    body2: {
+      fontFamily: "System",
+      fontSize: 14,
+      fontWeight: "400",
+      lineHeight: 22,
+    },
+    button: {
+      fontFamily: "System",
+      fontSize: 14,
+      fontWeight: "500",
+      lineHeight: 18,
+      textTransform: "uppercase",
+    },
+    caption: {
+      fontFamily: "System",
+      fontSize: 12,
+      fontWeight: "400",
+      lineHeight: 18,
+    },
+    overline: {
+      fontFamily: "System",
+      fontSize: 10,
+      fontWeight: "400",
+      lineHeight: 16,
+      textTransform: "uppercase",
+    },
+  },
+};
