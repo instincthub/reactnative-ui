@@ -18,6 +18,7 @@ yarn add @instincthub/reactnative-ui
 - Customizable theming system
 - Component-specific documentation and examples
 - Thorough test coverage using React Native Testing Library
+- Storybook integration for component development and documentation
 - Modern development practices and tooling
 
 ## Quick Start
@@ -120,27 +121,36 @@ yarn install
 3. Start development:
 
 ```bash
+# Build the package
 npm run build
-# or
-yarn build
+
+# Run Storybook for component development
+npm run storybook
+
+# Run tests
+npm test
 ```
+
+### Publish to NPM
+
+```bash
+npm publish --access public
+```
+
+### Available Scripts
+
+- `npm run build` - Build the package
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Generate test coverage report
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run storybook` - Start Storybook development server
+- `npm run build-storybook` - Build Storybook for production
 
 ### Testing
 
 We use Jest and React Native Testing Library for our test suite:
-
-```bash
-# Run tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Generate coverage report
-npm run test:coverage
-```
-
-Example test:
 
 ```jsx
 import { render, screen, fireEvent } from "@testing-library/react-native";
@@ -184,6 +194,21 @@ Each component includes:
 - Usage examples
 - Accessibility features
 - Test coverage
+- Storybook documentation
+
+## Dependencies
+
+### Peer Dependencies
+
+- React >= 18.2.0
+- React Native >= 0.79.0
+
+### Key Dependencies
+
+- @expo/vector-icons
+- @react-navigation/native
+- react-native-gesture-handler
+- react-native-reanimated
 
 ## Contributing
 

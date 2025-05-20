@@ -1,7 +1,7 @@
 export const typography = {
   fontFamily: {
-    primary: "Nunito",
-    secondary: "Montserrat",
+    primary: "Montserrat",
+    secondary: "Nunito",
   },
   fontSize: {
     xs: 12,
