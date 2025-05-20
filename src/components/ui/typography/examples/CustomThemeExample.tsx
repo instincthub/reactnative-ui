@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import { ThemeProvider, H1, Body1 } from "../index";
-import { defaultTheme } from "../../../../theme/ThemeProvider";
+import { H1, Body1 } from "../index";
+import { ThemeProvider } from "../../../../theme/ThemeProvider";
+import { defaultTheme } from "../../../../theme/default-theme";
 
 const CustomThemeExample = () => {
   return (

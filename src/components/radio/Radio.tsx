@@ -1,43 +1,37 @@
 import React from "react";
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  View,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
-} from "react-native";
-import { useTheme } from "../../theme/ThemeProvider";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import { useTheme } from "../../theme/theme-context";
 
 export interface RadioProps {
-  /** Whether the radio is selected */
+  /** The label text of the radio button */
+  label: string;
+  /** Whether the radio button is selected */
   selected: boolean;
-  /** Function called when radio state changes */
-  onValueChange: (selected: boolean) => void;
-  /** Text label for the radio */
-  label?: string;
-  /** Whether the radio is disabled */
-  disabled?: boolean;
-  /** Size of the radio */
+  /** Function called when radio button is pressed */
+  onPress: () => void;
+  /** Size of the radio button */
   size?: "small" | "medium" | "large";
-  /** Additional styles for the container */
-  containerStyle?: StyleProp<ViewStyle>;
-  /** Additional styles for the radio */
-  radioStyle?: StyleProp<ViewStyle>;
-  /** Additional styles for the label */
-  labelStyle?: StyleProp<TextStyle>;
-  /** Accessibility label for screen readers */
-  accessibilityLabel?: string;
-  /** Test ID for testing */
-  testID?: string;
+  /** Whether the radio button is disabled */
+  disabled?: boolean;
+  /** Custom color for selected state */
+  selectedColor?: string;
+  /** Custom color for unselected state */
+  unselectedColor?: string;
+  /** Custom color for label text */
+  labelColor?: string;
+  /** Custom color for disabled state */
+  disabledColor?: string;
 }
 
 const getStyles = (
   theme: ReturnType<typeof useTheme>,
   size: "small" | "medium" | "large",
   selected: boolean,
-  disabled: boolean
+  disabled: boolean,
+  selectedColor?: string,
+  unselectedColor?: string,
+  labelColor?: string,
+  disabledColor?: string
 ) => {
   const getRadioSize = () => {
     switch (size) {
@@ -86,43 +80,53 @@ const getStyles = (
       borderRadius: 999, // Circular shape
       borderWidth: 2,
       borderColor: selected
-        ? theme.colors.primary.main
-        : theme.colors.neutral.gray400,
+        ? selectedColor || theme.colors.primary.main
+        : unselectedColor || theme.colors.neutral.gray400,
       opacity: disabled ? 0.5 : 1,
     },
     innerCircle: {
       width: getInnerCircleSize(),
       height: getInnerCircleSize(),
       borderRadius: 999, // Circular shape
-      backgroundColor: theme.colors.primary.main,
+      backgroundColor: selectedColor || theme.colors.primary.main,
     },
     label: {
       fontFamily: theme.typography.fontFamily.primary,
       fontSize: getLabelSize(),
-      color: disabled ? theme.colors.text.disabled : theme.colors.text.primary,
+      color: disabled
+        ? disabledColor || theme.colors.text.disabled
+        : labelColor || theme.colors.text.primary,
       marginLeft: theme.spacing.sm,
     },
   });
 };
 
 export const Radio: React.FC<RadioProps> = ({
-  selected,
-  onValueChange,
   label,
-  disabled = false,
+  selected,
+  onPress,
   size = "medium",
-  containerStyle,
-  radioStyle,
-  labelStyle,
-  accessibilityLabel,
-  testID,
+  disabled = false,
+  selectedColor,
+  unselectedColor,
+  labelColor,
+  disabledColor,
 }) => {
   const theme = useTheme();
-  const styles = getStyles(theme, size, selected, disabled);
+  const styles = getStyles(
+    theme,
+    size,
+    selected,
+    disabled,
+    selectedColor,
+    unselectedColor,
+    labelColor,
+    disabledColor
+  );
 
   const handlePress = () => {
     if (!disabled) {
-      onValueChange(!selected);
+      onPress();
     }
   };
 
@@ -130,17 +134,15 @@ export const Radio: React.FC<RadioProps> = ({
     <TouchableOpacity
       onPress={handlePress}
       disabled={disabled}
-      style={[styles.container, containerStyle]}
+      style={styles.container}
       accessibilityRole="radio"
       accessibilityState={{ selected, disabled }}
-      accessibilityLabel={accessibilityLabel || label}
-      testID={testID}
     >
-      <View style={[styles.radio, radioStyle]}>
+      <View style={styles.radio}>
         {selected && <View style={styles.innerCircle} />}
       </View>
 
-      {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
+      <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   );
 };

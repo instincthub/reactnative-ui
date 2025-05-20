@@ -9,7 +9,7 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import { useTheme } from "../../theme/ThemeProvider";
+import { useTheme } from "../../theme/theme-context";
 import { Feather } from "@expo/vector-icons";
 
 export type ButtonVariant = "primary" | "secondary" | "outlined" | "text";
@@ -40,6 +40,12 @@ export interface ButtonProps {
   accessibilityLabel?: string;
   /** Test ID for testing */
   testID?: string;
+  /** Custom background color for primary variant */
+  primaryColor?: string;
+  /** Custom background color for secondary variant */
+  secondaryColor?: string;
+  /** Custom text color for outlined and text variants */
+  textColor?: string;
 }
 
 const getStyles = (
@@ -47,7 +53,10 @@ const getStyles = (
   variant: ButtonVariant,
   size: ButtonSize,
   disabled: boolean,
-  loading: boolean
+  loading: boolean,
+  primaryColor?: string,
+  secondaryColor?: string,
+  textColor?: string
 ) => {
   const baseStyles = StyleSheet.create({
     button: {
@@ -56,6 +65,10 @@ const getStyles = (
       justifyContent: "center",
       borderRadius: theme.borderRadius.medium,
       opacity: disabled || loading ? 0.6 : 1,
+    },
+    touchable: {
+      backgroundColor: "transparent",
+      borderColor: "transparent",
     },
     textBase: {
       textAlign: "center",
@@ -72,7 +85,7 @@ const getStyles = (
   > = {
     primary: {
       button: {
-        backgroundColor: theme.colors.primary.main,
+        backgroundColor: primaryColor || theme.colors.primary.main,
       },
       text: {
         color: theme.colors.neutral.white,
@@ -80,7 +93,7 @@ const getStyles = (
     },
     secondary: {
       button: {
-        backgroundColor: theme.colors.secondary.main,
+        backgroundColor: secondaryColor || theme.colors.secondary.main,
       },
       text: {
         color: theme.colors.neutral.white,
@@ -90,10 +103,10 @@ const getStyles = (
       button: {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: theme.colors.primary.main,
+        borderColor: textColor || theme.colors.primary.main,
       },
       text: {
-        color: theme.colors.primary.main,
+        color: textColor || theme.colors.primary.main,
       },
     },
     text: {
@@ -101,7 +114,7 @@ const getStyles = (
         backgroundColor: "transparent",
       },
       text: {
-        color: theme.colors.primary.main,
+        color: textColor || theme.colors.primary.main,
       },
     },
   };
@@ -165,15 +178,27 @@ export const Button: React.FC<ButtonProps> = ({
   textStyle,
   accessibilityLabel,
   testID,
+  primaryColor,
+  secondaryColor,
+  textColor,
 }) => {
   const theme = useTheme();
-  const styles = getStyles(theme, variant, size, disabled, loading);
+  const styles = getStyles(
+    theme,
+    variant,
+    size,
+    disabled,
+    loading,
+    primaryColor,
+    secondaryColor,
+    textColor
+  );
 
   return (
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled || loading}
-      style={[styles.button, style]}
+      style={[styles.button, styles.touchable, style]}
       accessibilityLabel={accessibilityLabel || label}
       accessibilityRole="button"
       accessibilityState={{ disabled, busy: loading }}
@@ -184,7 +209,7 @@ export const Button: React.FC<ButtonProps> = ({
           size="small"
           color={
             variant === "outlined" || variant === "text"
-              ? theme.colors.primary.main
+              ? textColor || theme.colors.primary.main
               : theme.colors.neutral.white
           }
         />

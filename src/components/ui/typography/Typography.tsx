@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TextStyle, TextProps } from "react-native";
-import { useTheme } from "../../../theme/ThemeProvider";
+import { useTheme } from "../../../theme/theme-context";
 import { useResponsiveFont } from "./useResponsiveFont";
 import { useAccessibilityFont } from "./useAccessibilityFont";
 

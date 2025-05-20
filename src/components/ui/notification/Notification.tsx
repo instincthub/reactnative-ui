@@ -10,7 +10,7 @@ import {
   TextStyle,
   Dimensions,
 } from "react-native";
-import { useTheme } from "../../../theme/ThemeProvider";
+import { useTheme } from "../../../theme/theme-context";
 
 export type NotificationType = "success" | "error" | "warning" | "info";
 export type NotificationPosition = "top" | "bottom";
@@ -34,6 +34,8 @@ export interface NotificationProps {
   showCloseButton?: boolean;
   /** Custom icon to display (component) */
   icon?: React.ReactNode;
+  /** Custom primary color for info variant */
+  primaryColor?: string;
   /** Custom styles for the notification container */
   containerStyle?: StyleProp<ViewStyle>;
   /** Custom styles for the title text */
@@ -61,6 +63,7 @@ export const Notification: React.FC<NotificationProps> = ({
   duration = 3000,
   showCloseButton = true,
   icon,
+  primaryColor,
   containerStyle,
   titleStyle,
   messageStyle,
@@ -149,7 +152,7 @@ export const Notification: React.FC<NotificationProps> = ({
       case "info":
       default:
         return {
-          backgroundColor: theme.colors.primary.main,
+          backgroundColor: primaryColor || theme.colors.primary.main,
           color: "#FFFFFF",
           icon: "info",
         };

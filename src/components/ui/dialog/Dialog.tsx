@@ -9,7 +9,7 @@ import {
   TextStyle,
 } from "react-native";
 import { Modal, ModalProps } from "../modal/Modal";
-import { useTheme } from "../../../theme/ThemeProvider";
+import { useTheme } from "../../../theme/theme-context";
 
 export type DialogVariant =
   | "default"
@@ -47,6 +47,8 @@ export interface DialogProps extends Omit<ModalProps, "children"> {
   actionLayout?: DialogActionLayout;
   /** Icon to display beside the title */
   icon?: React.ReactNode;
+  /** Custom primary color for buttons and accents */
+  primaryColor?: string;
   /** Additional content to render below the message */
   children?: React.ReactNode;
   /** Additional styles for the actions container */
@@ -66,6 +68,7 @@ export const Dialog: React.FC<DialogProps> = ({
   actions = [],
   actionLayout = "horizontal",
   icon,
+  primaryColor,
   children,
   actionsContainerStyle,
   buttonStyle,
@@ -119,12 +122,12 @@ export const Dialog: React.FC<DialogProps> = ({
       alignItems: "center",
     },
     primaryButton: {
-      backgroundColor: theme.colors.primary.main,
+      backgroundColor: primaryColor || theme.colors.primary.main,
     },
     secondaryButton: {
       backgroundColor: "transparent",
       borderWidth: 1,
-      borderColor: theme.colors.neutral.gray300,
+      borderColor: primaryColor || theme.colors.neutral.gray300,
     },
     buttonText: {
       fontFamily: theme.typography.fontFamily.primary,
@@ -132,10 +135,10 @@ export const Dialog: React.FC<DialogProps> = ({
       fontWeight: theme.typography.fontWeight.medium as any,
     },
     primaryButtonText: {
-      color: theme.colors.text.primary,
+      color: theme.colors.neutral.white,
     },
     secondaryButtonText: {
-      color: theme.colors.text.primary,
+      color: primaryColor || theme.colors.text.primary,
     },
     disabledButton: {
       opacity: 0.5,

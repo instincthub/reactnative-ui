@@ -12,7 +12,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { useTheme } from "../../../theme/ThemeProvider";
+import { useTheme } from "../../../theme/theme-context";
 
 export type ModalPosition = "center" | "bottom" | "top";
 

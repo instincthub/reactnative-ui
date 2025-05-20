@@ -11,7 +11,7 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import { useTheme } from "../../../theme/ThemeProvider";
+import { useTheme } from "../../../theme/theme-context";
 
 export type AlertType = "default" | "success" | "error" | "warning" | "info";
 export type AlertButton = {
@@ -28,16 +28,34 @@ export type AlertButton = {
 };
 
 export interface AlertProps {
+  /** The type of alert to display */
+  type: "success" | "error" | "warning" | "info";
+  /** The title of the alert */
+  title: string;
+  /** The message content of the alert */
+  message: string;
   /** Whether the alert is visible */
   visible: boolean;
+  /** Function called when the alert is dismissed */
+  onDismiss: () => void;
+  /** Custom success color */
+  successColor?: string;
+  /** Custom error color */
+  errorColor?: string;
+  /** Custom warning color */
+  warningColor?: string;
+  /** Custom info color */
+  infoColor?: string;
+  /** Custom background color for success state */
+  successBgColor?: string;
+  /** Custom background color for error state */
+  errorBgColor?: string;
+  /** Custom background color for warning state */
+  warningBgColor?: string;
+  /** Custom background color for info state */
+  infoBgColor?: string;
   /** Function to call when the alert is dismissed */
   onClose: () => void;
-  /** Title of the alert */
-  title: string;
-  /** Message to display in the alert body */
-  message: string;
-  /** Visual type of the alert which determines colors */
-  type?: AlertType;
   /** Array of buttons to display in the alert */
   buttons?: AlertButton[];
   /** Whether to allow closing the alert by tapping outside */
@@ -54,12 +72,74 @@ export interface AlertProps {
   testID?: string;
 }
 
+const getTypeStyles = (
+  type: AlertProps["type"],
+  theme: ReturnType<typeof useTheme>,
+  successColor?: string,
+  errorColor?: string,
+  warningColor?: string,
+  infoColor?: string,
+  successBgColor?: string,
+  errorBgColor?: string,
+  warningBgColor?: string,
+  infoBgColor?: string
+) => {
+  switch (type) {
+    case "success":
+      return {
+        color: successColor || theme.colors.semantic.success,
+        backgroundColor:
+          successBgColor ||
+          theme.colors.semantic.successLight ||
+          "rgba(0, 200, 83, 0.1)",
+      };
+    case "error":
+      return {
+        color: errorColor || theme.colors.semantic.error,
+        backgroundColor:
+          errorBgColor ||
+          theme.colors.semantic.errorLight ||
+          "rgba(255, 53, 53, 0.1)",
+      };
+    case "warning":
+      return {
+        color: warningColor || theme.colors.semantic.warning,
+        backgroundColor:
+          warningBgColor ||
+          theme.colors.semantic.warningLight ||
+          "rgba(255, 171, 0, 0.1)",
+      };
+    case "info":
+      return {
+        color: infoColor || theme.colors.primary.main,
+        backgroundColor:
+          infoBgColor ||
+          theme.colors.primary.light ||
+          "rgba(33, 150, 243, 0.1)",
+      };
+    default:
+      return {
+        color: theme.colors.text.primary,
+        backgroundColor: "transparent",
+      };
+  }
+};
+
 export const Alert: React.FC<AlertProps> = ({
-  visible,
-  onClose,
+  type,
   title,
   message,
-  type = "default",
+  visible,
+  onDismiss,
+  successColor,
+  errorColor,
+  warningColor,
+  infoColor,
+  successBgColor,
+  errorBgColor,
+  warningBgColor,
+  infoBgColor,
+  onClose,
   buttons = [{ text: "OK", onPress: onClose, style: "primary" }],
   dismissable = true,
   containerStyle,
@@ -71,6 +151,19 @@ export const Alert: React.FC<AlertProps> = ({
   const theme = useTheme();
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const scaleAnim = React.useRef(new Animated.Value(0.9)).current;
+
+  const typeStyles = getTypeStyles(
+    type,
+    theme,
+    successColor,
+    errorColor,
+    warningColor,
+    infoColor,
+    successBgColor,
+    errorBgColor,
+    warningBgColor,
+    infoBgColor
+  );
 
   // When visible changes, animate the alert
   React.useEffect(() => {
@@ -102,42 +195,6 @@ export const Alert: React.FC<AlertProps> = ({
       ]).start();
     }
   }, [visible, fadeAnim, scaleAnim]);
-
-  const getTypeStyles = () => {
-    switch (type) {
-      case "success":
-        return {
-          color: theme.colors.semantic.success,
-          backgroundColor:
-            theme.colors.semantic.successLight || "rgba(0, 200, 83, 0.1)",
-        };
-      case "error":
-        return {
-          color: theme.colors.semantic.error,
-          backgroundColor:
-            theme.colors.semantic.errorLight || "rgba(255, 53, 53, 0.1)",
-        };
-      case "warning":
-        return {
-          color: theme.colors.semantic.warning,
-          backgroundColor:
-            theme.colors.semantic.warningLight || "rgba(255, 171, 0, 0.1)",
-        };
-      case "info":
-        return {
-          color: theme.colors.primary.main,
-          backgroundColor:
-            theme.colors.primary.light || "rgba(33, 150, 243, 0.1)",
-        };
-      default:
-        return {
-          color: theme.colors.text.primary,
-          backgroundColor: "transparent",
-        };
-    }
-  };
-
-  const typeStyles = getTypeStyles();
 
   const styles = StyleSheet.create({
     backdrop: {

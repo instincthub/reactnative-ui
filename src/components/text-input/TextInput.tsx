@@ -11,7 +11,7 @@ import {
   NativeSyntheticEvent,
   TextInputFocusEventData,
 } from "react-native";
-import { useTheme } from "../../theme/ThemeProvider";
+import { useTheme } from "../../theme/theme-context";
 import { Feather } from "@expo/vector-icons";
 
 export type ValidationState = "default" | "error" | "success" | "warning";
@@ -58,6 +58,8 @@ export interface TextInputProps {
   leftIcon?: keyof typeof Feather.glyphMap;
   /** Icon to display at the end of the input */
   rightIcon?: keyof typeof Feather.glyphMap;
+  /** Custom primary color for focus state */
+  primaryColor?: string;
   /** Additional styles for the container */
   containerStyle?: StyleProp<ViewStyle>;
   /** Additional styles for the input */
@@ -79,7 +81,8 @@ const getStyles = (
   variant: InputVariant,
   validationState: ValidationState,
   isFocused: boolean,
-  disabled: boolean
+  disabled: boolean,
+  primaryColor?: string
 ) => {
   const baseStyles = StyleSheet.create({
     container: {
@@ -147,7 +150,7 @@ const getStyles = (
   > = {
     default: {
       borderColor: isFocused
-        ? theme.colors.primary.main
+        ? primaryColor || theme.colors.primary.main
         : theme.colors.neutral.gray300,
       textColor: theme.colors.text.secondary,
     },
@@ -198,6 +201,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   maxLength,
   leftIcon,
   rightIcon,
+  primaryColor,
   containerStyle,
   inputStyle,
   labelStyle,
@@ -214,7 +218,8 @@ export const TextInput: React.FC<TextInputProps> = ({
     variant,
     validationState,
     isFocused,
-    disabled
+    disabled,
+    primaryColor
   );
 
   const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {

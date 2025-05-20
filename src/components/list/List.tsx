@@ -11,7 +11,7 @@ import {
   TextStyle,
   ListRenderItem,
 } from "react-native";
-import { useTheme } from "../../theme/ThemeProvider";
+import { useTheme } from "../../theme/theme-context";
 
 export interface ListProps<T> {
   /** Data to render in the list */
@@ -34,6 +34,8 @@ export interface ListProps<T> {
   emptyComponent?: React.ReactNode;
   /** Whether the list should show dividers */
   showDividers?: boolean;
+  /** Custom primary color for loading indicators and refresh control */
+  primaryColor?: string;
   /** Additional styles for the container */
   containerStyle?: StyleProp<ViewStyle>;
   /** Additional styles for the separator */
@@ -96,6 +98,7 @@ export function List<T>({
   emptyText = "No items to display",
   emptyComponent,
   showDividers = true,
+  primaryColor,
   containerStyle,
   separatorStyle,
   emptyTextStyle,
@@ -126,7 +129,10 @@ export function List<T>({
     if (loadingMore) {
       return (
         <View style={styles.footer} testID={`${testID}-loading-more`}>
-          <ActivityIndicator size="small" color={theme.colors.primary.main} />
+          <ActivityIndicator
+            size="small"
+            color={primaryColor || theme.colors.primary.main}
+          />
         </View>
       );
     }
@@ -137,7 +143,10 @@ export function List<T>({
     if (loading) {
       return (
         <View style={styles.emptyContainer}>
-          <ActivityIndicator size="large" color={theme.colors.primary.main} />
+          <ActivityIndicator
+            size="large"
+            color={primaryColor || theme.colors.primary.main}
+          />
         </View>
       );
     }
@@ -168,8 +177,8 @@ export function List<T>({
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              colors={[theme.colors.primary.main]}
-              tintColor={theme.colors.primary.main}
+              colors={[primaryColor || theme.colors.primary.main]}
+              tintColor={primaryColor || theme.colors.primary.main}
             />
           ) : undefined
         }

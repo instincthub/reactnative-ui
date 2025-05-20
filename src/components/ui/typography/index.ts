@@ -26,6 +26,3 @@ export { TextWithIcon } from "./TextWithIcon";
 // Hooks
 export { useResponsiveFont } from "./useResponsiveFont";
 export { useAccessibilityFont } from "./useAccessibilityFont";
-
-// Theme provider
-export { ThemeProvider, useTheme } from "../../../theme/ThemeProvider";

@@ -1,5 +1,6 @@
 // Theme exports
-export * from "./theme/ThemeProvider";
+export { ThemeProvider } from "./theme/ThemeProvider";
+export { useTheme, ThemeContext } from "./theme/theme-context";
 export * from "./theme/colors";
 export * from "./theme/typography";
 export * from "./theme/spacing";

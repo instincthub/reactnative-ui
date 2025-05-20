@@ -1,7 +1,8 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react-native";
 import { TextInput } from "./TextInput";
-import { defaultTheme, ThemeProvider } from "../../theme/ThemeProvider";
+import { ThemeProvider } from "../../theme/ThemeProvider";
+import { defaultTheme } from "../../theme/default-theme";
 
 const renderWithTheme = (component: React.ReactElement) => {
   return render(

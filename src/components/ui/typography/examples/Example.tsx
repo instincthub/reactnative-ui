@@ -1,7 +1,7 @@
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { ThemeProvider } from "theme/ThemeProvider";
 import {
-  ThemeProvider,
   H1,
   H2,
   Body1,

@@ -9,7 +9,7 @@ import {
   TextStyle,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { useTheme } from "../../theme/ThemeProvider";
+import { useTheme } from "../../theme/theme-context";
 
 export interface CheckboxProps {
   /** Whether the checkbox is checked */
