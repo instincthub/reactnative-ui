@@ -14,7 +14,4 @@ export * from "./components/checkbox/Checkbox";
 export * from "./components/navigation";
 
 // UI exports
-export * from "./components/ui/typography";
-export * from "./components/ui/typography/examples";
-export * from "./components/ui/loading";
-export * from "./components/ui/loading/examples";
+export * from "./components/ui/index";

@@ -4,7 +4,7 @@ import { ThemeProvider } from "../../../../theme/ThemeProvider";
 import { NotificationProvider } from "../NotificationProvider";
 import { NavigationExample } from "../../../navigation";
 
-const App: React.FC = () => {
+const NotificationExampleApp: React.FC = () => {
   return (
     <ThemeProvider>
       <NotificationProvider>
@@ -16,4 +16,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default NotificationExampleApp;

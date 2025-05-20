@@ -3,7 +3,7 @@ import { View, Button, StyleSheet } from "react-native";
 import { Alert } from "../../alert";
 import { useNotification } from "../NotificationProvider";
 
-const ExampleScreen: React.FC = () => {
+const NotificationExampleScreen: React.FC = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const notification = useNotification();
 
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExampleScreen;
+export default NotificationExampleScreen;
