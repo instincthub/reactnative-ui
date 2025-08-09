@@ -37,7 +37,7 @@ export interface AlertProps {
   /** Whether the alert is visible */
   visible: boolean;
   /** Function called when the alert is dismissed */
-  onDismiss: () => void;
+  onDismiss?: () => void;
   /** Custom success color */
   successColor?: string;
   /** Custom error color */
