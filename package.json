@@ -1,6 +1,6 @@
 {
   "name": "@instincthub/reactnative-ui",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A comprehensive React Native UI component library with a robust design system",
   "main": "dist/index.js",
   "module": "dist/index.js",

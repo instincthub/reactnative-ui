@@ -36,8 +36,6 @@ export interface AlertProps {
   message: string;
   /** Whether the alert is visible */
   visible: boolean;
-  /** Function called when the alert is dismissed */
-  onDismiss?: () => void;
   /** Custom success color */
   successColor?: string;
   /** Custom error color */
@@ -130,7 +128,6 @@ export const Alert: React.FC<AlertProps> = ({
   title,
   message,
   visible,
-  onDismiss,
   successColor,
   errorColor,
   warningColor,
